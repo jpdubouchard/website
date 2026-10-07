@@ -3,6 +3,7 @@
 Site-level decisions, newest first. Hosting account details and security to-dos are kept in JP's private notes, not here.
 
 ## 2026-10-07
+- Repo rules for Claude live in `CLAUDE.md`, kept out of the upload. Since this project can't write to JP's private vault, any thread that changes status or makes a decision ends with a "Vault update" section for JP to paste there.
 - Security headers come from CloudFront's managed `SecurityHeadersPolicy` rather than a custom policy: nothing to maintain, and it covers HTTPS-only, no content sniffing, no framing and a referrer rule.
 
 ## 2026-10-06
