@@ -33,7 +33,7 @@ jobs:
       - name: Upload site to S3
         run: |
           aws s3 sync . "s3://$BUCKET" \
-            --exclude ".git/*" --exclude ".github/*" --exclude "README*"
+            --exclude ".git/*" --exclude ".github/*" --exclude "README*" --exclude "DECISIONS.md"
 
       - name: Refresh CloudFront cache
         run: |
