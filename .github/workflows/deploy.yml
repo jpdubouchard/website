@@ -16,7 +16,8 @@ concurrency:
 env:
   AWS_REGION: us-west-2
   BUCKET: jpdubouchard.ca
-  DISTRIBUTION_ID: E10121UW5G6Y9S
+  # Prefer the secret (masked in the public logs); fall back to the variable
+  DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID || vars.CLOUDFRONT_DISTRIBUTION_ID }}
 
 jobs:
   deploy:
@@ -37,5 +38,9 @@ jobs:
 
       - name: Refresh CloudFront cache
         run: |
+          if [ -z "$DISTRIBUTION_ID" ]; then
+            echo "::error::Set the CLOUDFRONT_DISTRIBUTION_ID repo secret (or variable)"
+            exit 1
+          fi
           aws cloudfront create-invalidation \
             --distribution-id "$DISTRIBUTION_ID" --paths "/*"
