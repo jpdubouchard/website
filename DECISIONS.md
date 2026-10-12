@@ -3,6 +3,7 @@
 Site-level decisions, newest first. Hosting account details and security to-dos are kept in JP's private notes, not here.
 
 ## 2026-10-12
+- The CloudFront distribution ID moved out of `deploy.yml` into the `CLOUDFRONT_DISTRIBUTION_ID` repo variable. The 2019 commits that show JP's email as author stay as they are, since removing it would mean rewriting `main`.
 - The beer map (beer.jpdubouchard.ca) now loads over HTTPS. It sits behind its own CloudFront distribution on the free plan, with an ACM certificate and HTTP redirected to HTTPS, in front of its S3 website bucket. Before this its DNS pointed straight at the bucket, which only serves HTTP.
 
 ## 2026-10-09
