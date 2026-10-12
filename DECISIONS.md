@@ -2,6 +2,9 @@
 
 Site-level decisions, newest first. Hosting account details and security to-dos are kept in JP's private notes, not here.
 
+## 2026-10-12
+- The beer map (beer.jpdubouchard.ca) now loads over HTTPS. It sits behind its own CloudFront distribution on the free plan, with an ACM certificate and HTTP redirected to HTTPS, in front of its S3 website bucket. Before this its DNS pointed straight at the bucket, which only serves HTTP.
+
 ## 2026-10-09
 - The rebuild uses Astro with content in Markdown, replacing the plain HTML pages. Launch pages are home (about and résumé) and contact.
 - The site is bilingual from the start: English under `/en/`, French under `/fr/`, with a language switch.
