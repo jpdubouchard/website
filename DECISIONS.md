@@ -2,6 +2,9 @@
 
 Site-level decisions, newest first. Hosting account details and security to-dos are kept in JP's private notes, not here.
 
+## 2026-10-15
+- The site now builds with Astro, and the deploy uploads only the build output. The 2019 pages are served unchanged from `public/` until the new pages launch, and pull requests run the same build as a check.
+
 ## 2026-10-12
 - The CloudFront distribution ID moved out of `deploy.yml` into the `CLOUDFRONT_DISTRIBUTION_ID` repo secret, so it is masked in the public Actions logs like the deploy role. The 2019 commits that show JP's email as author stay as they are, since removing it would mean rewriting `main`.
 - The beer map (beer.jpdubouchard.ca) now loads over HTTPS. It sits behind its own CloudFront distribution on the free plan, with an ACM certificate and HTTP redirected to HTTPS, in front of its S3 website bucket. Before this its DNS pointed straight at the bucket, which only serves HTTP.
@@ -34,4 +37,4 @@ Site-level decisions, newest first. Hosting account details and security to-dos 
 - Architecture plan: one CloudFront distribution serves the public site and `/projects/<name>/` static copies, the gallery from a separate private bucket, and `/api/contact` from a Lambda function. Projects needing a server go on a subdomain or are hosted elsewhere and linked.
 
 ## Open
-- Current role and post-2019 history for the résumé content.
+- None right now.
