@@ -25,16 +25,27 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      # Build before signing in to AWS, so a failed build never touches the bucket
+      - name: Build site
+        run: |
+          npm ci
+          npm run build
+
       - uses: aws-actions/configure-aws-credentials@v6
         with:
           # Prefer the secret (masked in the public logs); fall back to the variable
           role-to-assume: ${{ secrets.AWS_ROLE_ARN || vars.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
+      # Only the build output is uploaded, so notes files (README, DECISIONS.md, CLAUDE.md) never reach the bucket
       - name: Upload site to S3
         run: |
-          aws s3 sync . "s3://$BUCKET" \
-            --exclude ".git/*" --exclude ".github/*" --exclude "README*" --exclude "DECISIONS.md" --exclude "CLAUDE.md"
+          aws s3 sync dist/ "s3://$BUCKET"
 
       - name: Refresh CloudFront cache
         run: |
