@@ -20,7 +20,7 @@ const items = [
     <a class="name" href={`/${lang}/`}>{t(lang, 'site.name')}</a>
 
     <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">
-      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+      <span class="burger" aria-hidden="true"><span></span><span></span><span></span></span>
       <span>{t(lang, 'nav.menu')}</span>
     </button>
 
@@ -71,10 +71,27 @@ const items = [
   label();
 
   const menu = document.querySelector<HTMLButtonElement>('.menu-button')!;
+  const panel = document.getElementById('site-nav')!;
+  const setOpen = (open: boolean) => menu.setAttribute('aria-expanded', String(open));
+  const isOpen = () => menu.getAttribute('aria-expanded') === 'true';
   menu.addEventListener('click', () => {
-    const open = menu.getAttribute('aria-expanded') !== 'true';
-    menu.setAttribute('aria-expanded', String(open));
+    setOpen(!isOpen());
+    if (isOpen()) panel.querySelector<HTMLElement>('a')?.focus();
   });
+  // Close on Escape (back to the button), a tap outside, or following a link
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen()) {
+      setOpen(false);
+      menu.focus();
+    }
+  });
+  document.addEventListener('click', (e) => {
+    const target = e.target as Node;
+    if (isOpen() && !panel.contains(target) && !menu.contains(target)) setOpen(false);
+  });
+  panel.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+  // Leaving phone width resets the menu
+  window.matchMedia('(min-width: 40.01rem)').addEventListener('change', () => setOpen(false));
 </script>
 
 <style>
@@ -174,28 +191,107 @@ const items = [
   .menu-button {
     display: none;
   }
+  .burger {
+    position: relative;
+    width: 18px;
+    height: 14px;
+  }
+  .burger span {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .burger span:nth-child(1) {
+    top: 0;
+  }
+  .burger span:nth-child(2) {
+    top: 6px;
+  }
+  .burger span:nth-child(3) {
+    top: 12px;
+  }
+  [aria-expanded='true'] .burger span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+  [aria-expanded='true'] .burger span:nth-child(2) {
+    opacity: 0;
+  }
+  [aria-expanded='true'] .burger span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
 
-  /* Phones: links fold into the menu button (only when scripts run; without them the links stay visible) */
+  /* Phones: links fold into a dropdown panel under the header. Without scripts the links stay visible inline. */
   @media (max-width: 40rem) {
-    :global(html.js) .menu-button {
-      display: inline-flex;
-    }
-    :global(html.js) .nav-panel {
-      display: none;
-    }
-    :global(html.js) .menu-button[aria-expanded='true'] + .nav-panel {
-      display: flex;
+    .site-header {
+      position: relative;
+      z-index: 10;
     }
     .nav-panel {
       flex-basis: 100%;
       flex-direction: column;
-      align-items: flex-start;
-      gap: 0.75rem;
-      padding: 0.5rem 0 0.25rem;
+      align-items: stretch;
+      gap: 0;
     }
     ul {
       flex-direction: column;
-      gap: 0.25rem;
+      gap: 0;
+    }
+    :global(html.js) .menu-button {
+      display: inline-flex;
+    }
+    :global(html.js) .nav-panel {
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      left: 1rem;
+      right: 1rem;
+      padding: 0.5rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      box-shadow: 0 12px 32px rgb(0 0 0 / 0.16);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-0.5rem);
+      transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0.18s;
+    }
+    :global(html.js) .menu-button[aria-expanded='true'] + .nav-panel {
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+    nav a {
+      display: block;
+      padding: 0.8rem 0.9rem;
+      border-bottom: 0;
+      border-left: 3px solid transparent;
+      border-radius: 0.4rem;
+      font-size: 1.1rem;
+    }
+    nav a:hover {
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+    }
+    nav a[aria-current='page'] {
+      border-left-color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 8%, transparent);
+    }
+    .tools {
+      justify-content: space-between;
+      margin-top: 0.5rem;
+      padding: 0.75rem 0.9rem 0.25rem;
+      border-top: 1px solid var(--border);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .burger span,
+    :global(html.js) .nav-panel,
+    :global(html.js) .menu-button[aria-expanded='true'] + .nav-panel {
+      transition: none;
     }
   }
 </style>
