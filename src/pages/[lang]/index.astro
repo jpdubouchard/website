@@ -1,16 +1,216 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { langs, t, type Lang } from '../../i18n/ui';
+import { dateRange } from '../../i18n/dates';
+import en from '../../content/resume/en';
+import fr from '../../content/resume/fr';
 
 export function getStaticPaths() {
   return langs.map((lang) => ({ params: { lang } }));
 }
 
 const lang = Astro.params.lang as Lang;
+const resume = { en, fr }[lang];
+const present = t(lang, 'home.present');
 ---
 
 <Base lang={lang} title={t(lang, 'home.title')}>
-  <h1>{t(lang, 'site.name')}</h1>
-  <p>{t(lang, 'home.placeholder')}</p>
-  <p><a class="button" href={`/${lang}/contact/`}>{t(lang, 'nav.contact')}</a></p>
+  <section class="intro" aria-labelledby="name">
+    <h1 id="name">{t(lang, 'site.name')}</h1>
+    <p class="role">{resume.intro.title}, {resume.intro.organization}</p>
+    <p class="summary">{resume.intro.summary}</p>
+    <p class="actions"><a class="button" href={`/${lang}/contact/`}>{t(lang, 'home.contact')}</a></p>
+  </section>
+
+  <section class="about" aria-labelledby="about">
+    <!-- Profile photo goes here once JP supplies it -->
+    <div class="photo" aria-hidden="true">JP</div>
+    <div>
+      <h2 id="about">{t(lang, 'home.about')}</h2>
+      <p>{resume.about}</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="experience">
+    <h2 id="experience">{t(lang, 'home.experience')}</h2>
+    <ol class="entries">
+      {
+        resume.experience.map((role) => (
+          <li class="entry">
+            <h3>{role.title}</h3>
+            <p class="meta">
+              <span>{role.organization}</span> · <span>{role.location}</span> ·{' '}
+              <span class="dates">{dateRange(role.start, role.end, lang, present)}</span>
+            </p>
+            {role.summary && <p>{role.summary}</p>}
+            <ul>
+              {role.bullets.map((b) => (
+                <li>{b}</li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section aria-labelledby="skills">
+    <h2 id="skills">{t(lang, 'home.skills')}</h2>
+    <div class="skill-groups">
+      {
+        resume.skills.map((group) => (
+          <div>
+            <h3>{group.group}</h3>
+            <ul class="tags">
+              {group.tags.map((tag) => (
+                <li>{tag}</li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section aria-labelledby="education">
+    <h2 id="education">{t(lang, 'home.education')}</h2>
+    <ol class="entries">
+      {
+        resume.education.map((school) => (
+          <li class="entry">
+            <h3>{school.title}</h3>
+            <p class="meta">
+              <span>{school.organization}</span> · <span>{school.location}</span> ·{' '}
+              <span class="dates">{dateRange(school.start, school.end, lang, present)}</span>
+            </p>
+            {school.note && <p>{school.note}</p>}
+          </li>
+        ))
+      }
+    </ol>
+    <h3 class="certs-heading">{t(lang, 'home.certifications')}</h3>
+    <ul class="certs">
+      {
+        resume.certifications.map((cert) => (
+          <li>
+            {cert.title}
+            {cert.issuer && <span class="issuer"> · {cert.issuer}</span>}
+          </li>
+        ))
+      }
+    </ul>
+  </section>
 </Base>
+
+<style>
+  section {
+    margin-bottom: 3rem;
+  }
+  h2 {
+    font-size: 1.5rem;
+    margin: 0 0 1.25rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--border);
+  }
+  h3 {
+    font-size: 1.1rem;
+    margin: 0;
+  }
+  .intro {
+    margin-top: 1rem;
+  }
+  .role {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin: 0 0 1rem;
+  }
+  .summary {
+    max-width: 44rem;
+    font-size: 1.1rem;
+  }
+  .actions {
+    margin-top: 1.5rem;
+  }
+  .about {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: 1.5rem 2rem;
+    align-items: start;
+  }
+  .about p {
+    max-width: 40rem;
+    margin: 0;
+  }
+  .photo {
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    color: var(--accent);
+    font-size: 2.25rem;
+    font-weight: 700;
+  }
+  .entries {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .entry {
+    padding-left: 1rem;
+    border-left: 3px solid var(--muted-bar);
+    margin-bottom: 1.75rem;
+  }
+  .entry p {
+    margin: 0.35rem 0;
+  }
+  .entry ul {
+    margin: 0.5rem 0 0;
+    padding-left: 1.2rem;
+  }
+  .entry li + li {
+    margin-top: 0.3rem;
+  }
+  .meta {
+    font-size: 0.95rem;
+  }
+  .dates {
+    white-space: nowrap;
+  }
+  .skill-groups {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: 1.5rem 2rem;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    list-style: none;
+    margin: 0.6rem 0 0;
+    padding: 0;
+  }
+  .tags li {
+    padding: 0.2rem 0.65rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.92rem;
+  }
+  .certs-heading {
+    margin-top: 1rem;
+  }
+  .certs {
+    margin: 0.6rem 0 0;
+    padding-left: 1.2rem;
+  }
+  .issuer {
+    opacity: 0.85;
+  }
+  @media (max-width: 40rem) {
+    .about {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
