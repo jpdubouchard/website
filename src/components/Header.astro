@@ -1,0 +1,297 @@
+---
+import { swapLang, t, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const path = Astro.url.pathname;
+const other: Lang = lang === 'en' ? 'fr' : 'en';
+const items = [
+  { href: `/${lang}/`, label: t(lang, 'nav.home') },
+  { href: `/${lang}/contact/`, label: t(lang, 'nav.contact') },
+];
+---
+
+<a class="skip visually-hidden" href="#main">{lang === 'fr' ? 'Aller au contenu' : 'Skip to content'}</a>
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="name" href={`/${lang}/`}>{t(lang, 'site.name')}</a>
+
+    <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="burger" aria-hidden="true"><span></span><span></span><span></span></span>
+      <span>{t(lang, 'nav.menu')}</span>
+    </button>
+
+    <div class="nav-panel" id="site-nav">
+      <nav aria-label={t(lang, 'nav.label')}>
+        <ul>
+          {
+            items.map((item) => (
+              <li>
+                <a href={item.href} aria-current={path === item.href ? 'page' : undefined}>
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <div class="tools">
+        <a class="lang" href={swapLang(path, other)} hreflang={other} lang={other} aria-label={t(lang, 'lang.switchLabel')}>
+          {other.toUpperCase()}
+        </a>
+        <button class="theme-toggle" type="button" data-to-dark={t(lang, 'theme.toDark')} data-to-light={t(lang, 'theme.toLight')} aria-label={t(lang, 'theme.toDark')}>
+          <svg class="icon-moon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="currentColor" /></svg>
+          <svg class="icon-sun" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5" fill="currentColor" /><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const root = document.documentElement;
+  const toggle = document.querySelector<HTMLButtonElement>('.theme-toggle')!;
+  const dark = window.matchMedia('(prefers-color-scheme: dark)');
+  const isDark = () => (root.dataset.theme ? root.dataset.theme === 'dark' : dark.matches);
+  const label = () => {
+    toggle.setAttribute('aria-label', isDark() ? toggle.dataset.toLight! : toggle.dataset.toDark!);
+  };
+  toggle.addEventListener('click', () => {
+    const next = isDark() ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem('theme', next);
+    } catch {}
+    label();
+  });
+  dark.addEventListener('change', label);
+  label();
+
+  const menu = document.querySelector<HTMLButtonElement>('.menu-button')!;
+  const panel = document.getElementById('site-nav')!;
+  const setOpen = (open: boolean) => menu.setAttribute('aria-expanded', String(open));
+  const isOpen = () => menu.getAttribute('aria-expanded') === 'true';
+  menu.addEventListener('click', () => {
+    setOpen(!isOpen());
+    if (isOpen()) panel.querySelector<HTMLElement>('a')?.focus();
+  });
+  // Close on Escape (back to the button), a tap outside, or following a link
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen()) {
+      setOpen(false);
+      menu.focus();
+    }
+  });
+  document.addEventListener('click', (e) => {
+    const target = e.target as Node;
+    if (isOpen() && !panel.contains(target) && !menu.contains(target)) setOpen(false);
+  });
+  panel.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+  // Leaving phone width resets the menu
+  window.matchMedia('(min-width: 40.01rem)').addEventListener('change', () => setOpen(false));
+</script>
+
+<style>
+  .skip:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    clip: auto;
+    display: block;
+    padding: 0.5rem 1rem;
+  }
+  .site-header {
+    border-bottom: 1px solid var(--border);
+  }
+  .bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+    padding-top: 0.9rem;
+    padding-bottom: 0.9rem;
+  }
+  .name {
+    color: var(--text);
+    font-weight: 700;
+    font-size: 1.15rem;
+    text-decoration: none;
+  }
+  .nav-panel {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  ul {
+    display: flex;
+    gap: 1.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  nav a {
+    display: inline-block;
+    padding: 0.25rem 0 0.2rem;
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+  }
+  nav a:hover {
+    border-bottom-color: var(--muted-bar);
+  }
+  nav a[aria-current='page'] {
+    font-weight: 600;
+    border-bottom-color: var(--accent);
+  }
+  .tools {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .lang {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+    justify-content: center;
+    padding: 0.3rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 0.4rem;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    cursor: pointer;
+  }
+  .icon-sun {
+    display: none;
+  }
+  :global(:root[data-theme='dark']) .icon-sun {
+    display: block;
+  }
+  :global(:root[data-theme='dark']) .icon-moon {
+    display: none;
+  }
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .icon-sun {
+      display: block;
+    }
+    :global(:root:not([data-theme='light'])) .icon-moon {
+      display: none;
+    }
+  }
+  .menu-button {
+    display: none;
+  }
+  .burger {
+    position: relative;
+    width: 18px;
+    height: 14px;
+  }
+  .burger span {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .burger span:nth-child(1) {
+    top: 0;
+  }
+  .burger span:nth-child(2) {
+    top: 6px;
+  }
+  .burger span:nth-child(3) {
+    top: 12px;
+  }
+  [aria-expanded='true'] .burger span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+  [aria-expanded='true'] .burger span:nth-child(2) {
+    opacity: 0;
+  }
+  [aria-expanded='true'] .burger span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  /* Phones: links fold into a dropdown panel under the header. Without scripts the links stay visible inline. */
+  @media (max-width: 40rem) {
+    .site-header {
+      position: relative;
+      z-index: 10;
+    }
+    .nav-panel {
+      flex-basis: 100%;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+    ul {
+      flex-direction: column;
+      gap: 0;
+    }
+    :global(html.js) .menu-button {
+      display: inline-flex;
+    }
+    :global(html.js) .nav-panel {
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      left: 1rem;
+      right: 1rem;
+      padding: 0.5rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      box-shadow: 0 12px 32px rgb(0 0 0 / 0.16);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-0.5rem);
+      transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0.18s;
+    }
+    :global(html.js) .menu-button[aria-expanded='true'] + .nav-panel {
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+    nav a {
+      display: block;
+      padding: 0.8rem 0.9rem;
+      border-bottom: 0;
+      border-left: 3px solid transparent;
+      border-radius: 0.4rem;
+      font-size: 1.1rem;
+    }
+    nav a:hover {
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+    }
+    nav a[aria-current='page'] {
+      border-left-color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 8%, transparent);
+    }
+    .tools {
+      justify-content: space-between;
+      margin-top: 0.5rem;
+      padding: 0.75rem 0.9rem 0.25rem;
+      border-top: 1px solid var(--border);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .burger span,
+    :global(html.js) .nav-panel,
+    :global(html.js) .menu-button[aria-expanded='true'] + .nav-panel {
+      transition: none;
+    }
+  }
+</style>

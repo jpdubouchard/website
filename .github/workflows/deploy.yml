@@ -35,6 +35,7 @@ jobs:
         run: |
           npm ci
           npm run build
+          npm run check
 
       - uses: aws-actions/configure-aws-credentials@v6
         with:
