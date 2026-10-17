@@ -1,5 +1,7 @@
 // Checks the built site in dist/: every new page exists in both languages,
-// internal links on the new pages resolve, and the palette meets WCAG AA contrast.
+// internal links on the new pages resolve, no new page contains anything that looks
+// like an email address, phone number, postal code or AWS account ID, and the
+// palette meets WCAG AA contrast.
 import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 
@@ -44,7 +46,23 @@ for (const l of LANGS) {
   }
 }
 
-// 3. Palette contrast (tokens in src/styles/global.css: light set, then dark sets)
+// 3. Privacy scan on the new pages (the whole HTML, so attributes and scripts count too)
+const privacy = [
+  ['an email address', /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g],
+  ['a phone number', /(?:\+?1[\s.-]?)?\(?\b\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}\b/g],
+  ['a postal code', /\b[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ -]?\d[ABCEGHJ-NPRSTV-Z]\d\b/g],
+  ['an AWS account ID', /\b\d{12}\b/g],
+];
+for (const l of LANGS) {
+  for (const file of htmlFiles(join(DIST, l))) {
+    const html = readFileSync(file, 'utf8');
+    for (const [what, re] of privacy) {
+      for (const [match] of html.matchAll(re)) errors.push(`${relative(DIST, file)} contains what looks like ${what}: ${match}`);
+    }
+  }
+}
+
+// 4. Palette contrast (tokens in src/styles/global.css: light set, then dark sets)
 const css = readFileSync('src/styles/global.css', 'utf8');
 const sets = [];
 for (const [, block] of css.matchAll(/\{([^{}]*--bg:[^{}]*)\}/g)) {
