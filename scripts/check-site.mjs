@@ -1,4 +1,4 @@
-// Checks the built site in dist/: every new page exists in both languages,
+// Checks the built site in dist/: every new page exists in both languages, both résumé PDFs exist,
 // internal links on the new pages resolve, no new page contains anything that looks
 // like an email address, phone number, postal code or AWS account ID, and the
 // palette meets WCAG AA contrast.
@@ -27,6 +27,15 @@ for (const l of LANGS) {
       if (!pages[other].has(page)) errors.push(`/${l}/${page} has no /${other}/ version`);
     }
   }
+}
+
+// 1b. Résumé PDFs: one per language, and the print pages they come from are not published
+const PDFS = { en: 'JP-DuBouchard-Resume.pdf', fr: 'JP-DuBouchard-CV.pdf' };
+for (const [l, name] of Object.entries(PDFS)) {
+  const file = join(DIST, l, name);
+  if (!existsSync(file)) errors.push(`Missing résumé PDF /${l}/${name}`);
+  else if (readFileSync(file).subarray(0, 5).toString() !== '%PDF-') errors.push(`/${l}/${name} is not a PDF`);
+  if (existsSync(join(DIST, l, 'resume-print'))) errors.push(`/${l}/resume-print/ should not be published`);
 }
 
 // 2. Internal links on the new pages

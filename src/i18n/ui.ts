@@ -16,6 +16,7 @@ export const ui = {
     'footer.links': 'Elsewhere',
     'home.title': 'Résumé',
     'home.contact': 'Contact me',
+    'home.download': 'Download résumé (PDF)',
     'home.about': 'About',
     'home.experience': 'Experience',
     'home.skills': 'Skills',
@@ -38,6 +39,7 @@ export const ui = {
     'footer.links': 'Ailleurs',
     'home.title': 'CV',
     'home.contact': 'Me contacter',
+    'home.download': 'Télécharger le CV (PDF)',
     'home.about': 'À propos',
     'home.experience': 'Expérience',
     'home.skills': 'Compétences',
@@ -54,6 +56,12 @@ export type UiKey = keyof (typeof ui)['en'];
 export function t(lang: Lang, key: UiKey): string {
   return ui[lang][key];
 }
+
+/** Résumé PDF per language, built from the same content by scripts/build-pdfs.mjs */
+export const pdfs = {
+  en: '/en/JP-DuBouchard-Resume.pdf',
+  fr: '/fr/JP-DuBouchard-CV.pdf',
+} as const;
 
 export const links = {
   linkedin: 'https://www.linkedin.com/in/jpdubouchard/',
