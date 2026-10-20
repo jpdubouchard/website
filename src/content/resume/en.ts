@@ -32,48 +32,33 @@ const resume: Resume = {
       "end": "2022-06",
       "summary": "Moved from QA analyst to Scrum Master on product teams.",
       "bullets": [
-        "Performed exploratory and feature testing on mobile and web applications",
-        "Gave developers feedback and guidance on bug fixes and UI/UX changes",
         "Facilitated Agile ceremonies and kept backlogs and delivery tools current so the team shared one view of priorities and sprint commitments",
         "Cleared delivery impediments and risks, stepping in directly or bringing in the right people to keep commitments on track",
         "Coached team members on Scrum roles, practices and principles to build team ownership"
       ]
-    },
+    }
+  ],
+  "earlier": [
     {
       "title": "System Test and Automation Co-op",
       "organization": "Avigilon",
       "location": "Greater Vancouver, BC",
       "start": "2016-01",
-      "end": "2016-12",
-      "bullets": [
-        "Performed exploratory and feature testing on enterprise software",
-        "Developed test cases for both manual and automated execution"
-      ]
+      "end": "2016-12"
     },
     {
       "title": "Electrical Technologist Co-op",
       "organization": "Canadian Coast Guard",
       "location": "Victoria, BC",
       "start": "2014-01",
-      "end": "2014-03",
-      "bullets": [
-        "Tested and repaired navigational equipment",
-        "Performed operational equipment tests at sea",
-        "Installed system upgrades aboard zodiac boats"
-      ]
+      "end": "2014-03"
     },
     {
       "title": "Electrical Technologist",
       "organization": "ECOFIT Networks Inc.",
       "location": "Victoria, BC",
       "start": "2013-04",
-      "end": "2013-09",
-      "bullets": [
-        "Programmed, assembled and tested complete ECOFIT systems",
-        "Defined and implemented SOPs for assembly, testing and shipment",
-        "Handled international parts orders and shipping, and warehouse inventory",
-        "Provided customer support by phone and email"
-      ]
+      "end": "2013-09"
     }
   ],
   "skills": [

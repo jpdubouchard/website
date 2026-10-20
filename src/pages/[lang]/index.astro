@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { langs, t, type Lang } from '../../i18n/ui';
+import { langs, pdfs, t, type Lang } from '../../i18n/ui';
 import { dateRange } from '../../i18n/dates';
 import en from '../../content/resume/en';
 import fr from '../../content/resume/fr';
@@ -19,7 +19,10 @@ const present = t(lang, 'home.present');
     <h1 id="name">{t(lang, 'site.name')}</h1>
     <p class="role">{resume.intro.title}, {resume.intro.organization}</p>
     <p class="summary">{resume.intro.summary}</p>
-    <p class="actions"><a class="button" href={`/${lang}/contact/`}>{t(lang, 'home.contact')}</a></p>
+    <p class="actions">
+      <a class="button" href={pdfs[lang]} download>{t(lang, 'home.download')}</a>
+      <a class="button secondary" href={`/${lang}/contact/`}>{t(lang, 'home.contact')}</a>
+    </p>
   </section>
 
   <section class="about" aria-labelledby="about">
@@ -48,6 +51,23 @@ const present = t(lang, 'home.present');
                 <li>{b}</li>
               ))}
             </ul>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section aria-labelledby="earlier">
+    <h2 id="earlier">{t(lang, 'home.earlier')}</h2>
+    <ol class="entries compact">
+      {
+        resume.earlier.map((role) => (
+          <li class="entry">
+            <h3>{role.title}</h3>
+            <p class="meta">
+              <span>{role.organization}</span> · <span>{role.location}</span> ·{' '}
+              <span class="dates">{dateRange(role.start, role.end, lang, present)}</span>
+            </p>
           </li>
         ))
       }
@@ -116,6 +136,19 @@ const present = t(lang, 'home.present');
     font-size: 1.1rem;
     margin: 0;
   }
+  /* The two main roles carry the page; earlier roles and education stay light */
+  #experience + .entries h3 {
+    font-size: 1.3rem;
+  }
+  #experience + .entries .entry {
+    margin-bottom: 2.25rem;
+  }
+  .compact .entry {
+    margin-bottom: 1.1rem;
+  }
+  .compact h3 {
+    font-size: 1rem;
+  }
   .intro {
     margin-top: 1rem;
   }
@@ -130,7 +163,15 @@ const present = t(lang, 'home.present');
     font-size: 1.1rem;
   }
   .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
     margin-top: 1.5rem;
+  }
+  .button.secondary {
+    background: transparent;
+    color: var(--accent);
+    box-shadow: inset 0 0 0 2px var(--accent);
   }
   .about {
     display: grid;
