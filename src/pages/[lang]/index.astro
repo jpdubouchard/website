@@ -57,6 +57,23 @@ const present = t(lang, 'home.present');
     </ol>
   </section>
 
+  <section aria-labelledby="earlier">
+    <h2 id="earlier">{t(lang, 'home.earlier')}</h2>
+    <ol class="entries compact">
+      {
+        resume.earlier.map((role) => (
+          <li class="entry">
+            <h3>{role.title}</h3>
+            <p class="meta">
+              <span>{role.organization}</span> · <span>{role.location}</span> ·{' '}
+              <span class="dates">{dateRange(role.start, role.end, lang, present)}</span>
+            </p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
   <section aria-labelledby="skills">
     <h2 id="skills">{t(lang, 'home.skills')}</h2>
     <div class="skill-groups">
@@ -118,6 +135,19 @@ const present = t(lang, 'home.present');
   h3 {
     font-size: 1.1rem;
     margin: 0;
+  }
+  /* The two main roles carry the page; earlier roles and education stay light */
+  #experience + .entries h3 {
+    font-size: 1.3rem;
+  }
+  #experience + .entries .entry {
+    margin-bottom: 2.25rem;
+  }
+  .compact .entry {
+    margin-bottom: 1.1rem;
+  }
+  .compact h3 {
+    font-size: 1rem;
   }
   .intro {
     margin-top: 1rem;

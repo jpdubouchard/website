@@ -32,48 +32,33 @@ const resume: Resume = {
       "end": "2022-06",
       "summary": "Passage d’analyste en assurance qualité à Scrum Master au sein d’équipes produit.",
       "bullets": [
-        "Tests exploratoires et fonctionnels d’applications mobiles et Web",
-        "Rétroaction et conseils aux développeurs sur les correctifs et les changements d’interface et d’expérience utilisateur",
         "Animation des cérémonies agiles et mise à jour des carnets de produit et des outils de livraison, pour que l’équipe partage une même vision des priorités et des engagements de sprint",
         "Levée des obstacles et des risques de livraison, en intervenant directement ou en faisant appel aux bonnes personnes pour tenir les engagements",
         "Coaching des membres de l’équipe sur les rôles, les pratiques et les principes de Scrum, pour renforcer l’appropriation par l’équipe"
       ]
-    },
+    }
+  ],
+  "earlier": [
     {
       "title": "Stagiaire coop, tests système et automatisation",
       "organization": "Avigilon",
       "location": "Grand Vancouver (C.-B.)",
       "start": "2016-01",
-      "end": "2016-12",
-      "bullets": [
-        "Tests exploratoires et fonctionnels de logiciels d’entreprise",
-        "Conception de cas de test pour l’exécution manuelle et automatisée"
-      ]
+      "end": "2016-12"
     },
     {
       "title": "Stagiaire coop, technologue en génie électrique",
       "organization": "Garde côtière canadienne",
       "location": "Victoria (C.-B.)",
       "start": "2014-01",
-      "end": "2014-03",
-      "bullets": [
-        "Essai et réparation d’équipement de navigation",
-        "Essais opérationnels d’équipement en mer",
-        "Installation de mises à niveau de systèmes à bord d’embarcations pneumatiques"
-      ]
+      "end": "2014-03"
     },
     {
       "title": "Technologue en génie électrique",
       "organization": "ECOFIT Networks Inc.",
       "location": "Victoria (C.-B.)",
       "start": "2013-04",
-      "end": "2013-09",
-      "bullets": [
-        "Programmation, assemblage et essai de systèmes ECOFIT complets",
-        "Définition et mise en œuvre de procédures normalisées pour l’assemblage, les essais et l’expédition",
-        "Gestion des commandes et de l’expédition internationales de pièces, ainsi que de l’inventaire de l’entrepôt",
-        "Soutien à la clientèle par téléphone et par courriel"
-      ]
+      "end": "2013-09"
     }
   ],
   "skills": [

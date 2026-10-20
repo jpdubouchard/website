@@ -58,6 +58,23 @@ const docTitle = `${t(lang, 'site.name')} – ${lang === 'fr' ? 'CV' : 'Résumé
     </section>
 
     <section>
+      <h2>{t(lang, 'home.earlier')}</h2>
+      {
+        resume.earlier.map((role) => (
+          <div class="entry light">
+            <div class="row">
+              <h3>
+                {role.title}, {role.organization}
+              </h3>
+              <span class="dates">{dateRange(role.start, role.end, lang, present)}</span>
+            </div>
+            <p class="loc">{role.location}</p>
+          </div>
+        ))
+      }
+    </section>
+
+    <section>
       <h2>{t(lang, 'home.skills')}</h2>
       {
         resume.skills.map((g) => (
@@ -143,6 +160,12 @@ const docTitle = `${t(lang, 'site.name')} – ${lang === 'fr' ? 'CV' : 'Résumé
   h3 {
     margin: 0;
     font-size: 10pt;
+  }
+  .entry:not(.light) h3 {
+    font-size: 11pt;
+  }
+  .entry.light {
+    margin-bottom: 4pt;
   }
   .row {
     display: flex;
