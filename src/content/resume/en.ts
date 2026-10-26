@@ -1,12 +1,12 @@
 import type { Resume } from './types';
 
-// From JP's résumé CSV (2026-10-15). French version in fr.ts.
+// From JP's résumé CSV (updated 2026-10-26). French version in fr.ts.
 const resume: Resume = {
   "intro": {
     "title": "Delivery and Engagement Manager",
     "organization": "EY",
     "location": "Victoria, BC",
-    "summary": "I'm a delivery leader who runs program-level governance and keeps complex, multi-million-dollar public sector programs on track. I pair Agile delivery with product partnership and coaching, and I adapt ways of working to the people on each program, with a focus on team health. I started in QA and engineering, so I'm comfortable with developers, designers and executives alike."
+    "summary": "I help public sector teams build digital services that work for the people who use them. I bring clients, designers and developers together around a shared plan, keep the work honest about budget and risk, and adapt how we work to the people on each program. I started in QA and engineering, so I'm as comfortable in a sprint review as in a room with executives."
   },
   "about": "Outside work I'm usually in the garden, building small tools for my own household, or making collages. I like projects that start as a problem I actually have, and this site is where some of them end up.",
   "experience": [
@@ -15,26 +15,28 @@ const resume: Resume = {
       "organization": "EY",
       "location": "Victoria, BC",
       "start": "2022-07",
-      "summary": "Leads digital transformation delivery for provincial government clients and a global brand platform.",
+      "summary": "Help public sector clients and EY teams turn complex programs into services people can rely on, with clear plans, healthy teams and honest numbers.",
       "bullets": [
-        "Own the commercial lifecycle of engagements: scoping, pricing, approvals, forecasting and invoicing",
-        "Led a provincial mining permitting program to a 12-month extension through the business case, pricing, staffing plan and risk assessment",
-        "Consolidated EY's regional studio brands into one global site on Adobe Experience Manager, launched June 2025 with no high or medium security findings",
-        "Shipped v2.0 of a provincial childcare funding system for 200+ users, finishing within 2% of budget",
-        "Set up contracts, SOWs and insurance compliance across five concurrent provincial engagements, plus a reusable SOW template"
+        "Build shared ways of working: co-designing how programs make decisions and meeting regularly with client leaders to keep the work on course",
+        "Guide teams through Agile principles, roles and practices so they deliver as one high-performing team: coaching teams, Product Owners and executives from kickoff to final acceptance",
+        "Help leaders see what's changing and why: executive briefings on operating-model changes and next-phase priorities",
+        "Help Product Owners focus on what matters most: shaping MVP scope and sequencing, and balancing new features against defects and technical debt",
+        "Turn discovery into a clear path forward: gap analyses, backlogs and multi-year roadmaps for a program's next phase",
+        "Turn client needs into plans they can trust, accounting for their budget and contractual constraints: scoping, pricing and forecasting that keep long-running programs funded and on track",
+        "Keep delivery visible and moving: reporting and progress tracking across several Agile teams, and bringing in the right people when work gets stuck"
       ]
     },
     {
-      "title": "Scrum Master and QA Analyst",
+      "title": "Scrum Master",
       "organization": "Freshworks Studio",
       "location": "Victoria, BC",
       "start": "2017-12",
       "end": "2022-06",
-      "summary": "Moved from QA analyst to Scrum Master on product teams.",
+      "summary": "Began as a QA analyst and moved into a full-time Scrum Master role on product teams.",
       "bullets": [
-        "Facilitated Agile ceremonies and kept backlogs and delivery tools current so the team shared one view of priorities and sprint commitments",
-        "Cleared delivery impediments and risks, stepping in directly or bringing in the right people to keep commitments on track",
-        "Coached team members on Scrum roles, practices and principles to build team ownership"
+        "Facilitated Agile ceremonies and backlogs so the team shared one view of priorities and sprint commitments",
+        "Coached team members on Scrum roles and practices and cleared what was blocking them",
+        "Started in QA, testing mobile and web applications and guiding developers on fixes and UI/UX changes"
       ]
     }
   ],
@@ -63,48 +65,39 @@ const resume: Resume = {
   ],
   "skills": [
     {
-      "group": "Program management",
+      "group": "People and teams",
       "tags": [
-        "Program governance",
-        "Dependency management",
-        "Budget forecasting",
-        "Financial controls",
-        "Contracts and SOWs",
+        "Agile coaching",
+        "Team health",
+        "Facilitation",
+        "Stakeholder partnership",
         "Executive communication"
       ]
     },
     {
-      "group": "Agile delivery",
+      "group": "Delivery",
+      "tags": [
+        "Program governance",
+        "Dependencies and risk",
+        "Roadmaps",
+        "Backlog management",
+        "MVP scoping"
+      ]
+    },
+    {
+      "group": "Planning and finance",
+      "tags": [
+        "Scoping and pricing",
+        "Budget forecasting",
+        "Contracts and SOWs",
+        "Vendor management"
+      ]
+    },
+    {
+      "group": "Methods and tools",
       "tags": [
         "Scrum",
-        "Delivery metrics",
-        "Risk and impediment management",
-        "Backlog governance",
-        "Agile ceremonies"
-      ]
-    },
-    {
-      "group": "Product ownership",
-      "tags": [
-        "Roadmaps",
-        "Requirements gathering",
-        "User stories",
-        "Prioritization",
-        "MVP and MUP scoping"
-      ]
-    },
-    {
-      "group": "Agile coaching",
-      "tags": [
-        "Team coaching",
-        "Executive coaching",
-        "Scrum Master community",
-        "Team health"
-      ]
-    },
-    {
-      "group": "Tools",
-      "tags": [
+        "SAFe",
         "Azure DevOps",
         "Jira",
         "Confluence",
