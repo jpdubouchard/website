@@ -32,7 +32,7 @@ const resume: Resume = {
       "location": "Victoria, BC",
       "start": "2017-12",
       "end": "2022-06",
-      "summary": "Began as a QA analyst and moved into a full-time Scrum Master role on product teams.",
+      "summary": "Full-time Scrum Master on product teams.",
       "bullets": [
         "Facilitated Agile ceremonies and backlogs so the team shared one view of priorities and sprint commitments",
         "Coached team members on Scrum roles and practices and cleared what was blocking them",

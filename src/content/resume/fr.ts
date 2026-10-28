@@ -32,7 +32,7 @@ const resume: Resume = {
       "location": "Victoria (C.-B.)",
       "start": "2017-12",
       "end": "2022-06",
-      "summary": "Début comme analyste en assurance qualité, puis passage à un rôle de Scrum Master à temps plein au sein d’équipes produit.",
+      "summary": "Scrum Master à temps plein au sein d’équipes produit.",
       "bullets": [
         "Animation des cérémonies agiles et des carnets de produit pour que l’équipe partage une même vision des priorités et des engagements de sprint",
         "Coaching des membres de l’équipe sur les rôles et les pratiques de Scrum, et levée des obstacles qui les freinaient",
