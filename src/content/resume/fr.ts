@@ -1,12 +1,12 @@
 import type { Resume } from './types';
 
-// French draft by Claude from en.ts (2026-10-17), for JP's review. Quebec typography: non-breaking space before colons and %.
+// French draft by Claude from en.ts (2026-10-17, updated 2026-10-26), for JP's review. Quebec typography: non-breaking space before colons and %.
 const resume: Resume = {
   "intro": {
     "title": "Gestionnaire de livraison et de mandats",
     "organization": "EY",
     "location": "Victoria (C.-B.)",
-    "summary": "Je suis un leader en livraison qui assure la gouvernance de programmes et garde sur la bonne voie des programmes complexes du secteur public valant plusieurs millions de dollars. J’allie la livraison agile au partenariat produit et au coaching, et j’adapte les façons de travailler aux personnes de chaque programme, avec une attention particulière à la santé des équipes. J’ai commencé en assurance qualité et en ingénierie, alors je suis aussi à l’aise avec les développeurs et les designers qu’avec la haute direction."
+    "summary": "J’aide des équipes du secteur public à bâtir des services numériques qui servent bien les gens qui les utilisent. Je rassemble clients, designers et développeurs autour d’un plan commun, je garde le travail honnête quant au budget et aux risques, et j’adapte notre façon de travailler aux personnes de chaque programme. J’ai commencé en assurance qualité et en ingénierie, alors je suis aussi à l’aise en revue de sprint que devant la haute direction."
   },
   "about": "En dehors du travail, on me trouve souvent au jardin, en train de bâtir de petits outils pour la maison ou de faire des collages. J’aime les projets qui partent d’un problème que j’ai vraiment, et c’est sur ce site que certains d’entre eux aboutissent.",
   "experience": [
@@ -15,111 +15,89 @@ const resume: Resume = {
       "organization": "EY",
       "location": "Victoria (C.-B.)",
       "start": "2022-07",
-      "summary": "Dirige la livraison de projets de transformation numérique pour des clients du gouvernement provincial et pour une plateforme de marque mondiale.",
+      "summary": "J’aide les clients du secteur public et les équipes d’EY à transformer des programmes complexes en services sur lesquels les gens peuvent compter, avec des plans clairs, des équipes en santé et des chiffres honnêtes.",
       "bullets": [
-        "Gestion du cycle commercial des mandats : définition de la portée, établissement des prix, approbations, prévisions et facturation",
-        "Direction d’un programme provincial de permis miniers jusqu’à une prolongation de 12 mois, grâce à l’analyse de rentabilisation, à l’établissement des prix, au plan de dotation et à l’évaluation des risques",
-        "Regroupement des marques régionales des studios d’EY en un seul site mondial sur Adobe Experience Manager, lancé en juin 2025 sans aucune constatation de sécurité de niveau élevé ou moyen",
-        "Livraison de la version 2.0 d’un système provincial de financement des services de garde pour plus de 200 utilisateurs, à 2 % près du budget",
-        "Mise en place des contrats, des énoncés de travail et de la conformité en matière d’assurance pour cinq mandats provinciaux simultanés, ainsi que d’un modèle d’énoncé de travail réutilisable"
+        "Bâtir des façons de travailler communes : cocréer la prise de décision des programmes et rencontrer régulièrement les dirigeants des clients pour garder le travail sur la bonne voie",
+        "Guider les équipes dans les principes, les rôles et les pratiques agiles pour qu’elles livrent comme une seule équipe très performante : coaching des équipes, des responsables de produit et de la haute direction, du lancement à l’acceptation finale",
+        "Aider les dirigeants à voir ce qui change et pourquoi : séances d’information à la direction sur les changements au modèle opérationnel et les priorités de la prochaine phase",
+        "Aider les responsables de produit à se concentrer sur l’essentiel : cadrage et séquençage du MVP, et arbitrage entre nouvelles fonctionnalités, défauts et dette technique",
+        "Transformer la découverte en une voie claire vers l’avant : analyses d’écart, carnets de produit et feuilles de route pluriannuelles pour la prochaine phase d’un programme",
+        "Transformer les besoins des clients en plans fiables, en tenant compte de leur budget et de leurs contraintes contractuelles : cadrage, établissement des prix et prévisions qui gardent les programmes de longue durée financés et sur la bonne voie",
+        "Garder la livraison visible et en mouvement : rapports et suivi de l’avancement pour plusieurs équipes agiles, et mobilisation des bonnes personnes quand le travail se bloque"
       ]
     },
     {
-      "title": "Scrum Master et analyste en assurance qualité",
+      "title": "Scrum Master",
       "organization": "Freshworks Studio",
       "location": "Victoria (C.-B.)",
       "start": "2017-12",
       "end": "2022-06",
-      "summary": "Passage d’analyste en assurance qualité à Scrum Master au sein d’équipes produit.",
+      "summary": "Scrum Master à temps plein au sein d’équipes produit.",
       "bullets": [
-        "Tests exploratoires et fonctionnels d’applications mobiles et Web",
-        "Rétroaction et conseils aux développeurs sur les correctifs et les changements d’interface et d’expérience utilisateur",
-        "Animation des cérémonies agiles et mise à jour des carnets de produit et des outils de livraison, pour que l’équipe partage une même vision des priorités et des engagements de sprint",
-        "Levée des obstacles et des risques de livraison, en intervenant directement ou en faisant appel aux bonnes personnes pour tenir les engagements",
-        "Coaching des membres de l’équipe sur les rôles, les pratiques et les principes de Scrum, pour renforcer l’appropriation par l’équipe"
+        "Animation des cérémonies agiles et des carnets de produit pour que l’équipe partage une même vision des priorités et des engagements de sprint",
+        "Coaching des membres de l’équipe sur les rôles et les pratiques de Scrum, et levée des obstacles qui les freinaient",
+        "Début en assurance qualité, avec des tests d’applications mobiles et Web et des conseils aux développeurs sur les correctifs et sur l’interface et l’expérience utilisateur"
       ]
-    },
+    }
+  ],
+  "earlier": [
     {
       "title": "Stagiaire coop, tests système et automatisation",
       "organization": "Avigilon",
       "location": "Grand Vancouver (C.-B.)",
       "start": "2016-01",
-      "end": "2016-12",
-      "bullets": [
-        "Tests exploratoires et fonctionnels de logiciels d’entreprise",
-        "Conception de cas de test pour l’exécution manuelle et automatisée"
-      ]
+      "end": "2016-12"
     },
     {
       "title": "Stagiaire coop, technologue en génie électrique",
       "organization": "Garde côtière canadienne",
       "location": "Victoria (C.-B.)",
       "start": "2014-01",
-      "end": "2014-03",
-      "bullets": [
-        "Essai et réparation d’équipement de navigation",
-        "Essais opérationnels d’équipement en mer",
-        "Installation de mises à niveau de systèmes à bord d’embarcations pneumatiques"
-      ]
+      "end": "2014-03"
     },
     {
       "title": "Technologue en génie électrique",
       "organization": "ECOFIT Networks Inc.",
       "location": "Victoria (C.-B.)",
       "start": "2013-04",
-      "end": "2013-09",
-      "bullets": [
-        "Programmation, assemblage et essai de systèmes ECOFIT complets",
-        "Définition et mise en œuvre de procédures normalisées pour l’assemblage, les essais et l’expédition",
-        "Gestion des commandes et de l’expédition internationales de pièces, ainsi que de l’inventaire de l’entrepôt",
-        "Soutien à la clientèle par téléphone et par courriel"
-      ]
+      "end": "2013-09"
     }
   ],
   "skills": [
     {
-      "group": "Gestion de programme",
+      "group": "Personnes et équipes",
       "tags": [
-        "Gouvernance de programme",
-        "Gestion des dépendances",
-        "Prévisions budgétaires",
-        "Contrôles financiers",
-        "Contrats et énoncés de travail",
+        "Coaching agile",
+        "Santé des équipes",
+        "Animation",
+        "Partenariat avec les parties prenantes",
         "Communication avec la direction"
       ]
     },
     {
-      "group": "Livraison agile",
+      "group": "Livraison",
+      "tags": [
+        "Gouvernance de programme",
+        "Dépendances et risques",
+        "Feuilles de route",
+        "Gestion du carnet de produit",
+        "Cadrage MVP"
+      ]
+    },
+    {
+      "group": "Planification et finances",
+      "tags": [
+        "Cadrage et établissement des prix",
+        "Prévisions budgétaires",
+        "Contrats et énoncés de travail",
+        "Gestion des fournisseurs"
+      ]
+    },
+    {
+      "group": "Méthodes et outils",
       "tags": [
         "Scrum",
-        "Indicateurs de livraison",
-        "Gestion des risques et des obstacles",
-        "Gouvernance du carnet de produit",
-        "Cérémonies agiles"
-      ]
-    },
-    {
-      "group": "Responsabilité produit",
-      "tags": [
-        "Feuilles de route",
-        "Collecte des exigences",
-        "Récits utilisateurs",
-        "Priorisation",
-        "Cadrage MVP et MUP"
-      ]
-    },
-    {
-      "group": "Coaching agile",
-      "tags": [
-        "Coaching d’équipe",
-        "Coaching de la direction",
-        "Communauté des Scrum Masters",
-        "Santé des équipes"
-      ]
-    },
-    {
-      "group": "Outils",
-      "tags": [
+        "SAFe",
         "Azure DevOps",
         "Jira",
         "Confluence",
