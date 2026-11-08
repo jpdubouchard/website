@@ -4,6 +4,7 @@ import { langs, pdfs, t, type Lang } from '../../i18n/ui';
 import { dateRange } from '../../i18n/dates';
 import en from '../../content/resume/en';
 import fr from '../../content/resume/fr';
+import photo from '../../assets/jp.webp';
 
 export function getStaticPaths() {
   return langs.map((lang) => ({ params: { lang } }));
@@ -26,8 +27,7 @@ const present = t(lang, 'home.present');
   </section>
 
   <section class="about" aria-labelledby="about">
-    <!-- Profile photo goes here once JP supplies it -->
-    <div class="photo" aria-hidden="true">JP</div>
+    <img class="photo" src={photo.src} width="256" height="256" alt={t(lang, 'home.photoAlt')} />
     <div>
       <h2 id="about">{t(lang, 'home.about')}</h2>
       <p>{resume.about}</p>
@@ -187,12 +187,7 @@ const present = t(lang, 'home.present');
     width: 8rem;
     height: 8rem;
     border-radius: 50%;
-    display: grid;
-    place-items: center;
-    background: color-mix(in srgb, var(--accent) 14%, transparent);
-    color: var(--accent);
-    font-size: 2.25rem;
-    font-weight: 700;
+    object-fit: cover;
   }
   .entries {
     list-style: none;
