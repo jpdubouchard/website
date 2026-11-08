@@ -4,11 +4,14 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node scripts/build-pdfs.mjs",
     "preview": "astro preview",
     "check": "node scripts/check-site.mjs"
   },
   "dependencies": {
     "astro": "7.3.8"
+  },
+  "devDependencies": {
+    "playwright-core": "1.56.1"
   }
 }

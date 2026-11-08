@@ -1,0 +1,205 @@
+---
+// Print layout for the résumé PDFs. scripts/build-pdfs.mjs prints this page to PDF and then
+// removes it from dist/, so it is never published. Same content files as the homepage.
+import { langs, links, t, type Lang } from '../../i18n/ui';
+import { dateRange } from '../../i18n/dates';
+import en from '../../content/resume/en';
+import fr from '../../content/resume/fr';
+
+export function getStaticPaths() {
+  return langs.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const resume = { en, fr }[lang];
+const present = t(lang, 'home.present');
+const strip = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+const contact = [resume.intro.location, 'jpdubouchard.ca/contact', strip(links.linkedin), strip(links.github)];
+const docTitle = `${t(lang, 'site.name')} – ${lang === 'fr' ? 'CV' : 'Résumé'}`;
+---
+
+<!doctype html>
+<html lang={lang === 'fr' ? 'fr-CA' : 'en-CA'}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>{docTitle}</title>
+  </head>
+  <body>
+    <header>
+      <h1>{t(lang, 'site.name')}</h1>
+      <p class="role">{resume.intro.title}</p>
+      <p class="contact">{contact.join('  ·  ')}</p>
+    </header>
+
+    <p class="summary">{resume.intro.summary}</p>
+
+    <section>
+      <h2>{t(lang, 'home.experience')}</h2>
+      {
+        resume.experience.map((role) => (
+          <div class="entry">
+            <div class="row">
+              <h3>
+                {role.title}, {role.organization}
+              </h3>
+              <span class="dates">{dateRange(role.start, role.end, lang, present)}</span>
+            </div>
+            <p class="loc">{role.location}</p>
+            {role.summary && <p class="blurb">{role.summary}</p>}
+            <ul>
+              {role.bullets.map((b) => (
+                <li>{b}</li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </section>
+
+    <section>
+      <h2>{t(lang, 'home.earlier')}</h2>
+      {
+        resume.earlier.map((role) => (
+          <div class="entry light">
+            <div class="row">
+              <h3>
+                {role.title}, {role.organization}
+              </h3>
+              <span class="dates">{dateRange(role.start, role.end, lang, present)}</span>
+            </div>
+            <p class="loc">{role.location}</p>
+          </div>
+        ))
+      }
+    </section>
+
+    <section>
+      <h2>{t(lang, 'home.skills')}</h2>
+      {
+        resume.skills.map((g) => (
+          <p class="skill">
+            <strong>{g.group}:</strong> {g.tags.join(' · ')}
+          </p>
+        ))
+      }
+    </section>
+
+    <section>
+      <h2>{t(lang, 'home.education')}</h2>
+      {
+        resume.education.map((e) => (
+          <div class="entry">
+            <div class="row">
+              <h3>
+                {e.title}, {e.organization}
+              </h3>
+              <span class="dates">{dateRange(e.start, e.end, lang, present)}</span>
+            </div>
+            {e.note && <p class="blurb">{e.note}</p>}
+          </div>
+        ))
+      }
+      <p class="skill certs">
+        {resume.certifications.map((c) => (c.issuer ? `${c.title} (${c.issuer})` : c.title)).join(' · ')}
+      </p>
+    </section>
+  </body>
+</html>
+
+<style is:global>
+  @page {
+    size: Letter;
+    margin: 0.55in 0.65in;
+  }
+  html {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  body {
+    margin: 0;
+    background: #fff;
+    color: #1f2245;
+    font-family: Arial, Helvetica, 'Liberation Sans', sans-serif;
+    font-size: 9.6pt;
+    line-height: 1.38;
+  }
+  h1 {
+    margin: 0;
+    font-size: 22pt;
+    line-height: 1.1;
+  }
+  .role {
+    margin: 2pt 0 0;
+    font-size: 12pt;
+    font-weight: 700;
+    color: #3a4699;
+  }
+  .contact {
+    margin: 4pt 0 0;
+    font-size: 9pt;
+    white-space: pre-wrap;
+  }
+  header {
+    padding-bottom: 8pt;
+    border-bottom: 1.5pt solid #3a4699;
+  }
+  .summary {
+    margin: 9pt 0 0;
+  }
+  section {
+    margin-top: 11pt;
+  }
+  h2 {
+    margin: 0 0 5pt;
+    padding-bottom: 2pt;
+    font-size: 11.5pt;
+    color: #3a4699;
+    border-bottom: 0.75pt solid #c9cde8;
+  }
+  h3 {
+    margin: 0;
+    font-size: 10pt;
+  }
+  .entry:not(.light) h3 {
+    font-size: 11pt;
+  }
+  .entry.light {
+    margin-bottom: 4pt;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12pt;
+  }
+  .dates {
+    flex: none;
+    font-size: 9pt;
+  }
+  .entry {
+    margin-bottom: 7pt;
+    break-inside: avoid;
+  }
+  .loc,
+  .blurb {
+    margin: 1pt 0 0;
+  }
+  .loc {
+    font-size: 9pt;
+    color: #4a4d70;
+  }
+  ul {
+    margin: 2pt 0 0;
+    padding-left: 13pt;
+  }
+  li + li {
+    margin-top: 1pt;
+  }
+  .skill {
+    margin: 0 0 2.5pt;
+  }
+  .certs {
+    margin-top: 5pt;
+  }
+</style>
